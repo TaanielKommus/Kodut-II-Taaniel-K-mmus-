@@ -10,24 +10,28 @@
       $database = "if16_taankomm";
       //functions.php
 
-        function signup($email, $password) {
+        function signup($signupEmail, $password, $firstname, $lastname, $birthdate,
+    		$gender, $profession, $hobbies) {
 
           //loon yhenduse
 
       		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
       		$GLOBALS["database"]);
 
-      		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?, ?)");
+      		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password, firstname,
+          lastname, birthdate, gender, profession, hobbies) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
           echo $mysqli->error;
       		//asendan kysim2rgid
       		//iga m2rgi kohta tuleb lisada yks t2ht - mis tyypi muutuja on
       		//s - string
       		//i - int
       		//d - double
-      		$stmt->bind_param("ss", $email, $password);
+      		$stmt->bind_param("ssssssss", $signupEmail, $password, $firstname, $lastname, $birthdate,
+      		$gender, $profession, $hobbies);
 
       		if ($stmt->execute()) {
-      			echo "õnnestus";
+      			echo "Õnnestus! Logi nüüd sisse ka!";
+
       		} else {
       			echo "ERROR ".$stmt->error;
 

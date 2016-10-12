@@ -44,7 +44,7 @@
 
 		if (empty ($_POST["signupPassword"])) {
 
-			$signupPasswordError = "* Väli on kohustuslik";
+			$signupPasswordError = "* Väli on kohustuslik!";
 
 		} else {
 
@@ -58,6 +58,7 @@
 
 	}
 
+	$firstname = " ";
 	$firstnameError = " ";
 
 	if (isset ($_POST["firstname"])) {
@@ -65,12 +66,17 @@
 
 		if (empty ($_POST["firstname"])) {
 
-			$firstnameError = "* Väli on kohustuslik";
+			$firstnameError = "* Väli on kohustuslik!";
+
+		}  else {
+
+				$firstname = $_POST["firstname"];
 
 		}
 
 	}
 
+	$lastname = " ";
 	$lastnameError = " ";
 
 
@@ -79,46 +85,94 @@
 
 		if (empty ($_POST["lastname"])) {
 
-			$lastnameError = "* Väli on kohustuslik";
-
-		}
-
-	}
-
-	//vaikimisi väärtus
-	$gender = "";
-	$genderError = "";
-
-	if (isset ($_POST["gender"])) {
-		if (empty ($_POST["gender"])) {
-// IKKA EI TÖÖTA!!!
-			$genderError = "* Valik on kohustuslik!";
+			$lastnameError = "* Väli on kohustuslik!";
 
 		} else {
-			$gender = $_POST["gender"];
+
+				$lastname = $_POST["lastname"];
+
 		}
 
 	}
+
+	$birthdate = " ";
+	$birthdateError = " ";
+
+
+	if (isset ($_POST["birthdate"])) {
+
+
+		if (empty ($_POST["birthdate"])) {
+
+			$birthdateError = "* Väli on kohustuslik!";
+
+		} else { $birthdate = $_POST["birthdate"];
+
+		}
+
+	}
+
+
+	$gender = " ";
+	$genderError = " ";
+
+	if (isset ($_POST["gender"])) {
+
+			if (!isset ($_POST["gender"])) {
+				$genderError = "* Valik on kohustuslik!";
+
+			} else {
+				$gender = $_POST["gender"];
+			}
+
+		}
+
+	$profession = " ";
+
+	if (isset ($_POST["profession"])) {
+
+				$profession = $_POST["profession"];
+			}
+
+
+
+	$hobbies = " ";
+
+	if (isset ($_POST["hobbies"])) {
+
+				$hobbies = $_POST["hobbies"];
+			}
+
+
 
 	if ( $signupEmailError == " " &&
 			 $signupPasswordError == " " &&
+			 $firstnameError == " " &&
+			 $lastnameError == " " &&
+			 $birthdateError == " " &&
+			 $genderError == " " &&
 			 isset($_POST["signupEmail"]) &&
-			 isset($_POST["signupPassword"])
+			 isset($_POST["signupPassword"]) &&
+			 isset($_POST["firstname"]) &&
+			 isset($_POST["lastname"]) &&
+			 isset($_POST["birthdate"]) &&
+			 isset($_POST["gender"])
 	   ) {
 
 		//vigu ei olnud, kõik on olemas
 		echo "Salvestan...<br>";
 		echo "email ".$signupEmail."<br>";
-		echo "parool ".$_POST["signupPassword"]."<br>";
+		//echo "parool ".$_POST["signupPassword"]."<br>";
 
 		$password = hash("sha512", $_POST["signupPassword"]);
 
-		echo $password."<br>";
+		//echo $password."<br>";
 
-		signup($signupEmail, $password);
-
+		signup($signupEmail, $password, $firstname, $lastname, $birthdate,
+		$gender, $profession, $hobbies);
 
 	}
+
 	$notice = " ";
 	//kas kasutaja tahab sisse logida
 	if ( isset($_POST["loginEmail"]) &&
@@ -145,7 +199,7 @@
 		<form method="POST" >
 
 			<label> E-post</label><br>
-			<input name="loginEmail" type="email">
+			<input name="loginEmail" type="email"	>
 
 			<br><br>
 			<label> Parool</label><br>
@@ -172,17 +226,17 @@
 			<br><br>
 
 			<label> Eesnimi</label><br>
-			<input name="firstname" type="text"> <?php echo $firstnameError; ?>
+			<input name="firstname" type="text" value="<?=$firstname;?>"> <?php echo $firstnameError; ?>
 
 			<br><br>
 
 			<label> Perekonnanimi</label><br>
-			<input name="lastname" type="text"> <?php echo $lastnameError; ?>
+			<input name="lastname" type="text" value="<?=$lastname;?>"> <?php echo $lastnameError; ?>
 
 			<br><br>
 
-			<label> Sünniaasta</label><br>
-			<input name="byear" type="date">
+			<label> Sünnikuupäev</label><br>
+			<input name="birthdate" type="date" value="<?=$birthdate;?>"> <?php echo $birthdateError; ?>
 
 			<br><br>
 
@@ -194,21 +248,27 @@
 				<input type="radio" name="gender" value="male" > Male<br>
 			<?php } ?>
 
-			<?php if ($gender == "female") { ?>
+			<?php if ($gender == "oemale") { ?>
 				<input type="radio" name="gender" value="female" checked> Female<br>
 			<?php } else { ?>
 				<input type="radio" name="gender" value="female" > Female<br>
 			<?php } ?>
 
+			<?php if ($gender == "other") { ?>
+				<input type="radio" name="gender" value="other" checked> Other<br>
+			<?php } else { ?>
+				<input type="radio" name="gender" value="other" > Other<br>
+			<?php } ?>
+
 			<br><br>
 
 			<label> Eriala</label><br>
-			<input name="profession" type="text">
+			<input name="profession" type="text" value="<?=$profession;?>">
 
 			<br><br>
 
 			<label> Hobid</label><br>
-			<input name="hobbies" type="text">
+			<input name="hobbies" type="text" value="<?=$hobbies;?>">
 
 			<br><br>
 
