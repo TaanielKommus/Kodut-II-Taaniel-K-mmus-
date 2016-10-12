@@ -74,7 +74,7 @@
                 $_SESSION["userEmail"] = $emailFromDb;
 
                 header("Location: data.php");
-
+                exit();
 
               } else {
                 $notice = "Parool vale";
@@ -138,7 +138,18 @@
           return $results;
         }
 
+        function cleanInput($input) {
 
+          $input = trim($input);
+
+          $input = stripslashes($input);
+
+          $input = htmlspecialchars($input);
+
+
+          return $input;
+
+        }
 
       /*function hello($firstname, $lastname) {
 

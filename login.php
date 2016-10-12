@@ -6,7 +6,9 @@
 	// kui on sisse loginud siis suunan data lehele
 	if(isset($_SESSION["userId"])) {
 		header("Location: data.php");
+		exit();
 	}
+
 //var_dump($_GET);
 
 //echo "<br>";
@@ -175,12 +177,14 @@
 
 	$notice = " ";
 	//kas kasutaja tahab sisse logida
+
 	if ( isset($_POST["loginEmail"]) &&
 			isset($_POST["loginPassword"]) &&
 			!empty($_POST["loginEmail"]) &&
-			!empty($_POST["loginPassword"])
+			!empty($_POST["loginPassword"]))
 
-	) {
+
+	{
 
 		$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
 	}
@@ -199,7 +203,7 @@
 		<form method="POST" >
 
 			<label> E-post</label><br>
-			<input name="loginEmail" type="email"	>
+			<input name="loginEmail" type="email">
 
 			<br><br>
 			<label> Parool</label><br>

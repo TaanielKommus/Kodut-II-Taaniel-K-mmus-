@@ -5,6 +5,7 @@
     //kui ei ole sisseloginud, suunan login lehele
     if(!isset($_SESSION["userId"])) {
       header("Location: login.php");
+      exit();
     }
 
     //kas aadressireal on logout
@@ -13,7 +14,7 @@
       session_destroy();
 
       header("Location: login.php");
-
+      exit();
     }
 
     if ( isset($_POST["age"]) &&
@@ -22,7 +23,10 @@
    !empty($_POST["color"])
   ) {
 
-  saveEvent($_POST["age"], $_POST["color"]);
+  $color = cleanInput($_POST["color"]);
+  $age = cleanInput($_POST["age"]);
+
+  saveEvent($age, $color);
 
   }
 
