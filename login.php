@@ -14,7 +14,7 @@
 //var_dump($_POST);
 
 //Muutujad
-	$signupEmailError = " ";
+	$signupEmailError = "*";
 	$signupEmail = " ";
 
 	//kas keegi vajutas nuppu ja see on olemas
@@ -36,7 +36,7 @@
 
 	}
 
-	$signupPasswordError = " ";
+	$signupPasswordError = "*";
 
 
 	if (isset ($_POST["signupPassword"])) {
@@ -59,7 +59,7 @@
 	}
 
 	$firstname = " ";
-	$firstnameError = " ";
+	$firstnameError = "*";
 
 	if (isset ($_POST["firstname"])) {
 
@@ -77,7 +77,7 @@
 	}
 
 	$lastname = " ";
-	$lastnameError = " ";
+	$lastnameError = "*";
 
 
 	if (isset ($_POST["lastname"])) {
@@ -96,7 +96,7 @@
 	}
 
 	$birthdate = " ";
-	$birthdateError = " ";
+	$birthdateError = "*";
 
 
 	if (isset ($_POST["birthdate"])) {
@@ -114,7 +114,7 @@
 
 
 	$gender = " ";
-	$genderError = " ";
+	$genderError = "*";
 
 	if (isset ($_POST["gender"])) {
 
@@ -145,12 +145,12 @@
 
 
 
-	if ( $signupEmailError == " " &&
-			 $signupPasswordError == " " &&
-			 $firstnameError == " " &&
-			 $lastnameError == " " &&
-			 $birthdateError == " " &&
-			 $genderError == " " &&
+	if ( $signupEmailError == "*" &&
+			 $signupPasswordError == "*" &&
+			 $firstnameError == "*" &&
+			 $lastnameError == "*" &&
+			 $birthdateError == "*" &&
+			 $genderError == "*" &&
 			 isset($_POST["signupEmail"]) &&
 			 isset($_POST["signupPassword"]) &&
 			 isset($_POST["firstname"]) &&
@@ -235,7 +235,7 @@
 
 			<br><br>
 
-			<label> Sünnikuupäev</label><br>
+			<label> Sünnikuupäev (dd/mm/yyyy)</label><br>
 			<input name="birthdate" type="date" value="<?=$birthdate;?>"> <?php echo $birthdateError; ?>
 
 			<br><br>
@@ -248,7 +248,7 @@
 				<input type="radio" name="gender" value="male" > Male<br>
 			<?php } ?>
 
-			<?php if ($gender == "oemale") { ?>
+			<?php if ($gender == "female") { ?>
 				<input type="radio" name="gender" value="female" checked> Female<br>
 			<?php } else { ?>
 				<input type="radio" name="gender" value="female" > Female<br>
